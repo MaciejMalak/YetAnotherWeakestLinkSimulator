@@ -1,5 +1,6 @@
 from logic import parser
 from logic import bank
+from TUI.terminal import HostTUI
 
 if __name__ == "__main__":
     with open("questions.txt","r") as f:
@@ -12,22 +13,7 @@ if __name__ == "__main__":
     parser_instance.parse_questions()
     parser_instance.isParsedCorrectly()
 
-    # Tests to check if the parser is working correctly
-    print("Participants:", parser_instance.participants)
-    print("Questions:", parser_instance.questions)
-    print("Answers:", parser_instance.answers)
+    prowadzacy = HostTUI()
+    prowadzacy.run()
 
-    # Tests to check if the bank is working correctly
-    bank_instance = bank.Bank(0)
-    print(bank_instance)
-    bank_instance.correct_answer()
-    print(bank_instance)
-    bank_instance.correct_answer()
-    print(bank_instance)
-    bank_instance.incorrect_answer()
-    print(bank_instance)
-    bank_instance.correct_answer()
-    print(bank_instance)
-    bank_instance.bank_money()
-    print(bank_instance)
 
