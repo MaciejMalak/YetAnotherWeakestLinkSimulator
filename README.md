@@ -4,7 +4,7 @@ A Python-based simulator for "The Weakest Link" game show, focused on running qu
 
 # YAWSS (Yet Another Weakest Link Simulator)
 
-📚 **[The full documentaction of this project can be found on our wiki page!](https://github.com/MaciejMalak/YAWSS/wiki)**
+📚 **[The full documentaction of this project can be found on our wiki page!]([https://github.com/MaciejMalak/YAWSS/wiki](https://github.com/MaciejMalak/YetAnotherWeakestLinkSimulator/wiki))**
 
 Install dependencies with:
 
