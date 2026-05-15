@@ -2,6 +2,10 @@
 
 A Python-based simulator for "The Weakest Link" game show, focused on running question sequences, tracking participant turns, and handling game flow through a blessed terminal interface. The current prototype includes question parsing, participant management, and a host UI built for English output.
 
+# YAWSS (Yet Another Weakest Link Simulator)
+
+📚 **[The full documentaction of this project can be found on our wiki page!](https://github.com/MaciejMalak/YAWSS/wiki)**
+
 Install dependencies with:
 
 ```bash
