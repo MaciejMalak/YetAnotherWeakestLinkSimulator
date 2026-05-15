@@ -1,5 +1,4 @@
 from logic import parser
-from logic import bank
 from TUI.terminal import HostTUI
 
 if __name__ == "__main__":
@@ -13,5 +12,5 @@ if __name__ == "__main__":
     parser_instance.parse_questions()
     parser_instance.isParsedCorrectly()
 
-    prowadzacy = HostTUI(parser_instance.questions)
+    prowadzacy = HostTUI(parser_instance.questions, parser_instance.answers, parser_instance.participants)
     prowadzacy.run()
