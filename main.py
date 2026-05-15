@@ -13,7 +13,5 @@ if __name__ == "__main__":
     parser_instance.parse_questions()
     parser_instance.isParsedCorrectly()
 
-    prowadzacy = HostTUI()
+    prowadzacy = HostTUI(parser_instance.questions)
     prowadzacy.run()
-
-

@@ -1,5 +1,9 @@
 from blessed import Terminal
+from logic.question_status import QuestionStatus
+from TUI.questions_logic import QuestionsLogic
 import time
+
+from logic.bank import Bank
 
 
 class HostTUI:
@@ -10,10 +14,11 @@ class HostTUI:
         term (Terminal): An instance of the Terminal class from the blessed library, used for terminal
         manipulation.
         running (bool): A flag to indicate whether the TUI is currently running."""
-    def __init__(self):
+    def __init__(self, questions: list[str]):
         """Initializes the HostTUI with a Terminal instance and sets the running flag to True."""
         self.term = Terminal()
         self.running = True
+        self.questions_logic = QuestionsLogic(questions)
 
     def draw_screen(
         self, question: str, chain: int, bank: int, time_left, participant: str
@@ -24,7 +29,7 @@ class HostTUI:
         print(
             self.term.move_y(0)
             + self.term.black_on_white(
-                self.term.center("=== YAWSS: Panel Prowadzącego ===")
+                self.term.center("=== Yet Another Weakest Link Simulator : Panel Prowadzącego ===")
             )
         )
         print(self.term.move_y(2) + self.term.center(f"Pytanie: {question}"))
@@ -46,11 +51,11 @@ class HostTUI:
     def run(self):
         """Runs the TUI, allowing the host to interact with the game by pressing keys to indicate correct or incorrect answers, or to bank the current amount."""
         with self.term.fullscreen(), self.term.hidden_cursor(), self.term.cbreak():
-            current_question = "Jakie jest największe jezioro na świecie?"
-            bank = 1500
+            current_question = "KLIKNIJ BACKSPACE ABY ZAINICJALIZOWAĆ PYTANIE"
+            bank = 0
             time_left = 30
             participant = "Jan Kowalski"
-            chain = 1
+            chain = 0
             while self.running:
                 self.draw_screen(current_question, chain, bank, time_left, participant)
                 key = self.term.inkey(timeout=0.1)
@@ -58,11 +63,13 @@ class HostTUI:
                     print(
                         self.term.move_y(12) + self.term.center("Odpowiedź poprawna!")
                     )
+                    current_question, chain = self.questions_logic.question_answered(QuestionStatus.ANSWERED_CORRECTLY)
                 elif key.code == self.term.KEY_BACKSPACE:
                     print(
                         self.term.move_y(12)
                         + self.term.center("Odpowiedź niepoprawna!")
                     )
+                    current_question, chain = self.questions_logic.question_answered(QuestionStatus.ANSWERED_INCORRECTLY)
                 elif key.code == self.term.KEY_ENTER:
                     print(self.term.move_y(12) + self.term.center("Bankowanie!"))
                 elif key.lower() == "q":
