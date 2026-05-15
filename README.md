@@ -44,8 +44,8 @@ YetAnotherWeakestLinkSimulator/
 
 ## Version History
 
-### v0.0.3 (Current)
-- Official release with full Blessed Terminal support and English interface text.
+### v0.1.0 (Current)
+- First alpha build with full Blessed Terminal support and English interface text.
 - Active work on game logic and improving the terminal interface.
 
 ### v0.0.2
@@ -55,7 +55,7 @@ YetAnotherWeakestLinkSimulator/
 - Initial prototype with basic parser and bank implementation.
 - Blessed Terminal was not yet implemented properly.
 
-### Next release: v0.0.4
+### Next release: v0.1.1
 - Planned timer support.
 - Expect additional game flow and interface enhancements.
 
