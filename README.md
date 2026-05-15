@@ -7,7 +7,7 @@ A Python-based simulator for "The Weakest Link" game show. This early prototype 
 | Feature | Status |
 |---------|--------|
 | Parser | ✅ |
-| Blessed Terminal UI | ⬜ |
+| Blessed Terminal UI | ⏳ |
 | Discord Bot Integration (private usage) | ⬜ |
 | Game Logic (timer, current question, bank, etc.) | ⬜ |
 | Terminal Interface (host and players) | ⬜ |
