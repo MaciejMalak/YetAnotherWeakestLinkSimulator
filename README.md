@@ -2,6 +2,12 @@
 
 A Python-based simulator for "The Weakest Link" game show, focused on running question sequences, tracking participant turns, and handling game flow through a blessed terminal interface. The current prototype includes question parsing, participant management, and a host UI built for English output.
 
+Install dependencies with:
+
+```bash
+pip install -r requirements.txt
+```
+
 ## Features (WIP)
 
 | Feature | Status |
