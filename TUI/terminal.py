@@ -1,4 +1,5 @@
 from blessed import Terminal
+from logic.config import GameConfig
 from logic.timer import GameTimer
 from logic.question_status import QuestionStatus
 from TUI.questions_logic import QuestionsLogic
@@ -13,12 +14,13 @@ class HostTUI:
         term (Terminal): An instance of the Terminal class from the blessed library, used for terminal
         manipulation.
         running (bool): A flag to indicate whether the TUI is currently running."""
-    def __init__(self, questions: list[str], answers: list[str], participants: list[str]):
+    def __init__(self, questions: list[str], answers: list[str], participants: list[str], config: GameConfig):
         """Initializes the HostTUI with a Terminal instance and sets the running flag to True."""
         self.term = Terminal()
         self.running = True
         self.questions_logic = QuestionsLogic(questions, answers, participants)
         self.time_available = True
+        self.config = config
 
     def draw_screen(
         self, question: str, answer: str, chain: int, bank: int, time_left: int, participant: str
@@ -54,26 +56,33 @@ class HostTUI:
 
     def run(self):
         """Runs the TUI, allowing the host to interact with the game by pressing keys to indicate correct or incorrect answers, or to bank the current amount."""
+
         with self.term.fullscreen(), self.term.hidden_cursor(), self.term.cbreak():
+
             current_question = "PRESS BACKSPACE TO INITIATE A QUESTION"
             answer = "Press space to mark the answer as correct"
             bank = 0
-            timer = GameTimer(30)
+            timer = GameTimer(self.config.round_duration)
             timer.start_round()
             participant = "John Doe"
             chain = 0
+
+
             while self.running:
+
                 if timer.time_left == 0 and self.time_available:
                     self.time_available = False
-                    print(self.term.move_y(8) + self.term.center(self.term.red("Time is up!")))
+
                 self.draw_screen(current_question, answer, chain, bank, timer.time_left, participant)
                 key = self.term.inkey(timeout=0.1)
+
                 if key.lower() == " ":
                     print(
                         self.term.move_y(12) + self.term.center("Correct answer!")
                     )
                     timer.record_answer(participant)
                     current_question, answer, participant, chain = self.questions_logic.question_answered(QuestionStatus.ANSWERED_CORRECTLY)
+
                 elif key.code == self.term.KEY_BACKSPACE:
                     print(
                         self.term.move_y(12)
@@ -81,11 +90,14 @@ class HostTUI:
                     )
                     timer.record_answer(participant)
                     current_question, answer, participant, chain = self.questions_logic.question_answered(QuestionStatus.ANSWERED_INCORRECTLY)
+
                 elif key.code == self.term.KEY_ENTER:
                     print(self.term.move_y(12) + self.term.center("Banking!"))
                     bank = self.questions_logic.bank_money()
                     chain = 0
+
                 elif key.lower() == "q":
                     self.running = False
                     print(self.term.move_y(12) + self.term.center("Game ended."))
+                    
                 time.sleep(0.3)

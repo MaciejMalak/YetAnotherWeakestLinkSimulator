@@ -1,0 +1,9 @@
+# ==========================================
+# YAWLS - Game Configuration Properties
+# ==========================================
+
+# Round duration (Base time)
+round_duration = 50
+
+# Extra time after the programme has started for host to prepare
+extra_time = 5

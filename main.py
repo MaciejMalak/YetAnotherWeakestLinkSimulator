@@ -1,6 +1,7 @@
 from logic import parser
 from TUI.terminal import HostTUI
 from pathlib import Path
+from logic.config import GameConfig
 
 BASE_DIR = Path(__file__).parent
 
@@ -15,5 +16,6 @@ if __name__ == "__main__":
     parser_instance.parse_questions()
     parser_instance.isParsedCorrectly()
 
-    prowadzacy = HostTUI(parser_instance.questions, parser_instance.answers, parser_instance.participants)
+    config = GameConfig()
+    prowadzacy = HostTUI(parser_instance.questions, parser_instance.answers, parser_instance.participants, config)
     prowadzacy.run()
