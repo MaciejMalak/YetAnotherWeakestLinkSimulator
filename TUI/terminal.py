@@ -1,4 +1,5 @@
 from blessed import Terminal
+from logic.timer import GameTimer
 from logic.question_status import QuestionStatus
 from TUI.questions_logic import QuestionsLogic
 import time
@@ -17,6 +18,7 @@ class HostTUI:
         self.term = Terminal()
         self.running = True
         self.questions_logic = QuestionsLogic(questions, answers, participants)
+        self.time_available = True
 
     def draw_screen(
         self, question: str, answer: str, chain: int, bank: int, time_left: int, participant: str
@@ -34,9 +36,12 @@ class HostTUI:
         print(self.term.move_y(3) + self.term.center(self.term.green(f"Answer: {answer}")))
         print(self.term.move_y(4) + self.term.center(f"Chain: {chain}"))
         print(self.term.move_y(6) + self.term.center(f"Bank: {bank}"))
-        print(
-            self.term.move_y(8) + self.term.center(f"Time remaining: {time_left}")
-        )
+        if self.time_available:
+            print(
+                self.term.move_y(8) + self.term.center(f"Time remaining: {time_left}")
+            )
+        else:
+            print(self.term.move_y(8) + self.term.center(self.term.red("Time is up!")))
         print(
             self.term.move_y(10) + self.term.center(f"Current participant: {participant}")
         )
@@ -53,22 +58,28 @@ class HostTUI:
             current_question = "PRESS BACKSPACE TO INITIATE A QUESTION"
             answer = "Press space to mark the answer as correct"
             bank = 0
-            time_left = 30
+            timer = GameTimer(30)
+            timer.start_round()
             participant = "John Doe"
             chain = 0
             while self.running:
-                self.draw_screen(current_question, answer, chain, bank, time_left, participant)
+                if timer.time_left == 0 and self.time_available:
+                    self.time_available = False
+                    print(self.term.move_y(8) + self.term.center(self.term.red("Time is up!")))
+                self.draw_screen(current_question, answer, chain, bank, timer.time_left, participant)
                 key = self.term.inkey(timeout=0.1)
                 if key.lower() == " ":
                     print(
                         self.term.move_y(12) + self.term.center("Correct answer!")
                     )
+                    timer.record_answer(participant)
                     current_question, answer, participant, chain = self.questions_logic.question_answered(QuestionStatus.ANSWERED_CORRECTLY)
                 elif key.code == self.term.KEY_BACKSPACE:
                     print(
                         self.term.move_y(12)
                         + self.term.center("Incorrect answer!")
                     )
+                    timer.record_answer(participant)
                     current_question, answer, participant, chain = self.questions_logic.question_answered(QuestionStatus.ANSWERED_INCORRECTLY)
                 elif key.code == self.term.KEY_ENTER:
                     print(self.term.move_y(12) + self.term.center("Banking!"))

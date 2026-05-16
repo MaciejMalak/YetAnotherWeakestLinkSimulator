@@ -20,10 +20,11 @@ pip install -r requirements.txt
 | Blessed Terminal UI | ✅ |
 | User-only interface | ⬜ |
 | Discord Bot Integration (private usage) | ⬜ |
-| Game Logic (timer, current question, bank, etc.) | ⏳ |
-| Terminal Interface (host and players) | ⏳ |
+| Game Logic (timer, current question, bank, etc.) | ✅ |
+| Host Interface | ✅ |
+| Player Interface | ⬜ |
 
-**Note:** The project now includes full blessed terminal support with English screen text. Game logic and terminal interface improvements are actively being worked on.
+**Note:** The project now includes full blessed terminal support with English screen text and timer support in the current alpha release. The host interface is implemented, while player interface work has not started yet. The next release will probably include a `properties.txt` settings file for game logic configuration.
 
 ## Repository Structure
 
@@ -57,10 +58,19 @@ The current version includes both `questions.txt` and `participants.txt` in the 
 
 ## Version History
 
-### v0.1.0 (Current)
+### v0.2.0 (Current)
+- Added timer support and improved game flow in the terminal interface.
+- Completed the first alpha release for the next major version.
+- Continued enhancements for question handling, participant turns, and UI flow.
+
+### v0.1.1
+- Bugfix release prior to the current alpha.
+- Improved terminal UI stability and fixed parser/flow issues.
+- Prepared the codebase for the timer-enabled `v0.2.0-alpha` release.
+
+### v0.1.0
 - Included `questions.txt` and `participants.txt` in the repository.
 - Added a simple tutorial on how to edit game content.
-- This is a hotfix applied to the current `0.1.0` version, not the next release.
 - First alpha build with full Blessed Terminal support and English interface text.
 - Active work on game logic and improving the terminal interface.
 
@@ -70,9 +80,5 @@ The current version includes both `questions.txt` and `participants.txt` in the 
 ### v0.0.1
 - Initial prototype with basic parser and bank implementation.
 - Blessed Terminal was not yet implemented properly.
-
-### Next release: v0.1.1
-- Planned timer support.
-- Expect additional game flow and interface enhancements.
 
 
