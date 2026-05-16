@@ -2,6 +2,10 @@
 
 A Python-based simulator for "The Weakest Link" game show, focused on running question sequences, tracking participant turns, and handling game flow through a blessed terminal interface. The current prototype includes question parsing, participant management, and a host UI built for English output.
 
+![Python](https://img.shields.io/badge/Python-3.x-blue?style=flat-square&logo=python)
+![Terminal](https://img.shields.io/badge/Interface-TUI-lightgrey?style=flat-square)
+![Discord](https://img.shields.io/badge/Integration-Discord_Webhooks-5865F2?style=flat-square&logo=discord)
+
 # YAWLS (Yet Another Weakest Link Simulator)
 
 📚 **[The full documentaction of this project can be found on our wiki page!](https://github.com/MaciejMalak/YetAnotherWeakestLinkSimulator/wiki)**
