@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.png" alt="YAWLS Logo" width="400"/>
+  <img src="logo.png" alt="YAWLS Logo" width="100%"/>
 </p>
 
 # YetAnotherWeakestLinkSimulator
