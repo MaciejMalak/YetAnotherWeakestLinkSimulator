@@ -1,0 +1,10 @@
+#Questions for the host, every line that doesn't start with hashtag is treated as a question
+#Question Format is as follows :
+#Question | Answer
+
+This Question | Won't be visible to anyone, don't include it unless you want it to be skipped
+What is YAWSS? | Yet Another Weakest Link Simulator
+Do you see this question? | Yes
+Is this question not visible? | No
+Another question | And another answer
+What is 2+2? | 4

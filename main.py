@@ -1,10 +1,13 @@
 from logic import parser
 from TUI.terminal import HostTUI
+from pathlib import Path
+
+BASE_DIR = Path(__file__).parent
 
 if __name__ == "__main__":
-    with open("questions.txt","r") as f:
+    with open(BASE_DIR / "questions.txt", "r") as f:
         questions = f.read().splitlines()
-    with open("participants.txt","r") as f:
+    with open(BASE_DIR / "participants.txt", "r") as f:
         participants = f.read().splitlines()
 
     parser_instance = parser.Parser(participants, questions)

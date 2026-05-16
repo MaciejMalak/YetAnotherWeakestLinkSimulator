@@ -42,9 +42,25 @@ YetAnotherWeakestLinkSimulator/
     └── terminal.py
 ```
 
+## Customizing Your Game
+
+The current version includes both `questions.txt` and `participants.txt` in the repository so you can edit them directly.
+
+- `questions.txt` contains the quiz questions and answers.
+- `participants.txt` contains the player names for each game.
+
+### How to edit
+1. Open `questions.txt` in any text editor.
+2. Add or change questions, keeping the existing format.
+3. Open `participants.txt` and update participant names as needed.
+4. Save both files and run `main.py` again to use the updated game data.
+
 ## Version History
 
 ### v0.1.0 (Current)
+- Included `questions.txt` and `participants.txt` in the repository.
+- Added a simple tutorial on how to edit game content.
+- This is a hotfix applied to the current `0.1.0` version, not the next release.
 - First alpha build with full Blessed Terminal support and English interface text.
 - Active work on game logic and improving the terminal interface.
 

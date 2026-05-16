@@ -1,0 +1,4 @@
+#Every line that doesn't begin with hashtag is a name of a participant e.g. below
+Participant1
+Participant2
+Participant3
