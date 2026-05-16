@@ -18,14 +18,14 @@ pip install -r requirements.txt
 |---------|--------|
 | Parser | ✅ |
 | Blessed Terminal UI | ✅ |
-| User-only interface | ⬜ |
-| Discord Bot Integration (private usage) | ⬜ |
+| User-only interface | ✅ |
+| Discord Websocket Integration (optional) | ✅ |
 | Game Logic (timer, current question, bank, etc.) | ✅ |
 | Properties (`properties.txt`) | ✅ |
 | Host Interface | ✅ |
-| Player Interface | ⬜ |
+| Player Interface | ✅ |
 
-**Note:** The project now includes full blessed terminal support with English screen text, timer support introduced in the previous release, and a project-level `properties.txt` settings file in the current `v0.3.0` release. The host interface is implemented, while player interface work has not started yet. The `properties.txt` file currently defines `round_duration` (seconds per round) and `extra_time` (additional prep time for the host).
+**Note:** The project now includes full blessed terminal support with English screen text, timer support introduced in the previous release, and a project-level `properties.txt` settings file in the current `v0.4.0` release. The host, user-only, and player interfaces are implemented. The `properties.txt` file currently defines `round_duration` (seconds per round), `extra_time` (additional prep time for the host), and an optional `discord_key` for webhook integration. If Discord is not configured, the app runs normally without Discord support. The next update will probably be a purely cosmetic polish release without additional features.
 
 ## Repository Structure
 
@@ -33,12 +33,16 @@ pip install -r requirements.txt
 YetAnotherWeakestLinkSimulator/
 ├── README.md
 ├── main.py
+├── debug.py
 ├── properties.txt
 ├── config.py
+├── discord_key.txt
 ├── participants.txt
 ├── questions.txt
 ├── logic/
 │   ├── bank.py
+│   ├── config.py
+│   ├── discord_notifier.py
 │   ├── parser.py
 │   ├── question_status.py
 │   └── timer.py
@@ -53,18 +57,25 @@ The current version includes `questions.txt`, `participants.txt`, and `propertie
 
 - `questions.txt` contains the quiz questions and answers.
 - `participants.txt` contains the player names for each game.
-- `properties.txt` contains configurable settings for the game logic (timer durations, scoring rules, UI options).
+- `properties.txt` contains configurable settings for the game logic, timing, and optional Discord webhook key.
 
 ### How to edit
 1. Open `questions.txt` in any text editor.
 2. Add or change questions, keeping the existing format.
 3. Open `participants.txt` and update participant names as needed.
-4. Open `properties.txt` and adjust settings to your preference. Current keys include `round_duration` (seconds per round) and `extra_time` (host preparation seconds) — consult the project wiki for full details.
+4. Open `properties.txt` and adjust settings to your preference. Current keys include `round_duration` (seconds per round), `extra_time` (host preparation seconds), and optional `discord_key` for Discord webhook support — consult the project wiki for full details.
 5. Save the files and run `main.py` again to use the updated game data and settings.
 
 ## Version History
 
-### v0.3.0 (Current)
+### v0.4.0 (Current)
+- Added optional Discord websocket integration; the app runs normally when Discord is not configured.
+- Updated `properties.txt` to support an optional `discord_key` for webhook integration.
+- Added root-level `debug.py` and `discord_key.txt` files to support new configuration flows.
+- Completed host, user-only, and player interface implementation.
+- Next update will probably be a purely cosmetic polish release without additional features.
+
+### v0.3.0
 - Added `properties.txt` to provide project-level settings for game logic and UI.
 - Integrated `properties.txt` into startup/config flow; settings control timers, scoring, and display options.
 - Updated README, features, and editing instructions to include properties/settings.

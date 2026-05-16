@@ -3,6 +3,7 @@ from logic.config import GameConfig
 from logic.timer import GameTimer
 from logic.question_status import QuestionStatus
 from TUI.questions_logic import QuestionsLogic
+from logic.discord_notifier import DiscordNotifier
 import time
 
 
@@ -21,6 +22,7 @@ class HostTUI:
         self.questions_logic = QuestionsLogic(questions, answers, participants)
         self.time_available = True
         self.config = config
+        self.notifier = DiscordNotifier(config.discord_url)
 
     def draw_screen(
         self, question: str, answer: str, chain: int, bank: int, time_left: int, participant: str
@@ -67,6 +69,10 @@ class HostTUI:
             participant = "John Doe"
             chain = 0
 
+            now = time.time()
+            end_time = now + timer.time_left
+            self.notifier.send_game_update(current_question, participant, end_time, chain, bank)
+
 
             while self.running:
 
@@ -82,6 +88,9 @@ class HostTUI:
                     )
                     timer.record_answer(participant)
                     current_question, answer, participant, chain = self.questions_logic.question_answered(QuestionStatus.ANSWERED_CORRECTLY)
+                    now = time.time()
+                    end_time = now + timer.time_left
+                    self.notifier.send_game_update(current_question, participant, end_time, chain, bank)
 
                 elif key.code == self.term.KEY_BACKSPACE:
                     print(
@@ -90,14 +99,23 @@ class HostTUI:
                     )
                     timer.record_answer(participant)
                     current_question, answer, participant, chain = self.questions_logic.question_answered(QuestionStatus.ANSWERED_INCORRECTLY)
+                    now = time.time()
+                    end_time = now + timer.time_left
+                    self.notifier.send_game_update(current_question, participant, end_time, chain, bank)
 
                 elif key.code == self.term.KEY_ENTER:
                     print(self.term.move_y(12) + self.term.center("Banking!"))
                     bank = self.questions_logic.bank_money()
                     chain = 0
 
+                    now = time.time()
+                    end_time = now + timer.time_left
+                    self.notifier.send_game_update(current_question, participant, end_time, chain, bank)
+
                 elif key.lower() == "q":
                     self.running = False
                     print(self.term.move_y(12) + self.term.center("Game ended."))
-                    
+                    self.notifier.freeze_old_message(current_question, participant, chain, bank)
+                    self.notifier.send_disconnect_message()
+
                 time.sleep(0.3)
