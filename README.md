@@ -35,6 +35,14 @@ pip install -r requirements.txt
 
 **Note:** The project now includes full blessed terminal support with English screen text, timer support introduced in the previous release, and a project-level `properties.txt` settings file in the current `v0.4.0` release. The host, user-only, and player interfaces are implemented. The `properties.txt` file currently defines `round_duration` (seconds per round), `extra_time` (additional prep time for the host), and an optional `discord_key` for webhook integration. If Discord is not configured, the app runs normally without Discord support. The next update will probably be a purely cosmetic polish release without additional features.
 
+## Road to v1.0.0
+
+- 🚀 `v0.6.0` — UI refresh update: various interface elements improved for a cleaner, more polished experience.
+- 🎨 `v0.7.0` — Discord customization and optimization update: better webhook handling and performance tuning.
+- ⏱️ `v0.8.0` — Proper setup time update: more configurable round timing and host preparation flow.
+- 🛠️ `v0.9.0` — Misc fixes update: bug fixes, polish, and stability improvements ahead of the major release.
+- 🌟 `v1.0.0` — Official 1.0 release with a boatload of surprises and a finished polished experience.
+
 ## Repository Structure
 
 ```
