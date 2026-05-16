@@ -37,10 +37,10 @@ pip install -r requirements.txt
 
 ## Road to v1.0.0
 
-- 🚀 `v0.6.0` — UI refresh update: various interface elements improved for a cleaner, more polished experience.
-- 🎨 `v0.7.0` — Discord customization and optimization update: better webhook handling and performance tuning.
-- ⏱️ `v0.8.0` — Proper setup time update: more configurable round timing and host preparation flow.
-- 🛠️ `v0.9.0` — Misc fixes update: bug fixes, polish, and stability improvements ahead of the major release.
+- 🚀 `v0.5.0` — UI refresh update: various interface elements improved for a cleaner, more polished experience.
+- 🎨 `v0.6.0` — Discord customization and optimization update: better webhook handling and performance tuning.
+- ⏱️ `v0.7.0` — Proper setup time update: more configurable round timing and host preparation flow.
+- 🛠️ `v0.8.0` — Misc fixes update: bug fixes, polish, and stability improvements ahead of the major release.
 - 🌟 `v1.0.0` — Official 1.0 release with a boatload of surprises and a finished polished experience.
 
 ## Repository Structure
