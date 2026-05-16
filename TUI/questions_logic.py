@@ -38,6 +38,11 @@ class QuestionsLogic:
     def bank_chain(self) -> int:
         """Returns the current amount of money in the bank."""
         return self.bank._current_chain_position
+    
+    @property
+    def questions_left(self) -> int:
+        """Returns the number of questions left in the game."""
+        return len(self.questions) - self.questions.index(self._current_question) - 1
 
     def question_answered(self, answer_status: QuestionStatus) -> tuple[str, str, str, int]:
         """Updates the current question, answer, participant, and bank chain position based on the status of the answered question.
@@ -45,6 +50,10 @@ class QuestionsLogic:
             answer_status (QuestionStatus): The status of the answered question, indicating whether it was answered correctly or incorrectly.
         Returns:
             tuple[str, str, str, int]: A tuple containing the updated current question, answer, participant, and bank chain position."""
+        
+        if self.questions_left == 0:
+                self.bank.bank_money()
+                return "__OUT_OF_QUESTIONS__", "", "", self.bank_chain
 
         if answer_status == QuestionStatus.ANSWERED_CORRECTLY:
             """ Update the question status to answered correctly"""

@@ -2,9 +2,10 @@ import requests
 
 class DiscordNotifier:
 
-    def __init__(self, webhook_url: str):
+    def __init__(self, webhook_url: str, color: int = 8421504):
         self.url = webhook_url
         self.message_id = None
+        self.color = color
 
     def send_game_update(self, question: str, participant: str, end_time_unix: float, chain_drawn: str, bank: int):
         if not self.url:
@@ -14,7 +15,7 @@ class DiscordNotifier:
             "embeds": [{
                 "title": "❓ Question Tab!",
                 "description": f"**Question:** {question}\n**Answering:** {participant}",
-                "color": 16711680, 
+                "color": self.color,
                 "fields": [
                     {
                         "name": "⏳ Time",
@@ -49,31 +50,77 @@ class DiscordNotifier:
     def freeze_old_message(self, question: str, participant: str, chain_drawn: str, bank: int):
         if not self.url or self.message_id is None:
             return
+        
+        if question == "__OUT_OF_QUESTIONS__":
 
-        payload = {
-            "embeds": [{
-                "title": "🏁 Round Finished / Interrupted",
-                "description": f"**Question:** {question}\n**Answering:** {participant}",
-                "color": 8421504,
-                "fields": [
-                    {
-                        "name": "⏳ Time",
-                        "value": "🛑 Stopped",
-                        "inline": True
-                    },
-                    {
-                        "name": "🔥 Chain",
-                        "value": f"{chain_drawn}", 
-                        "inline": True
-                    },
-                    {
-                        "name": "💰 Bank",
-                        "value": f"{bank}", 
-                        "inline": True
-                    }
-                ]
-            }]
-        }
+           payload = {
+                "embeds": [{
+                    "title": "🏁 Round Finished / Out of Questions",
+                    "description": "The question pool has been exhausted. Great job!",
+                    "color": 16766720,
+                    "fields": [
+                        {
+                            "name": "💰 Final Bank",
+                            "value": f"{bank}",
+                            "inline": True
+                        },
+                        {
+                            "name": "🔥 Final Chain",
+                            "value": f"`{chain_drawn}`",
+                            "inline": True
+                        }
+                    ]
+                }]
+            }
+           
+        elif question == "__TIMEOUT__":
+
+            payload = {
+                "embeds": [{
+                    "title": "⏳ Time's Up!",
+                    "description": f"**Answering:** {participant}\nTime has run out for this question.",
+                    "color": 16744192,
+                    "fields": [
+                        {
+                            "name": "🔥 Final Chain",
+                            "value": f"`{chain_drawn}`",
+                            "inline": True
+                        },
+                        {
+                            "name": "💰 Final Bank",
+                            "value": f"{bank}",
+                            "inline": True
+                        }
+                    ]
+                }]
+            }
+
+        else:
+
+            payload = {
+                "embeds": [{
+                    "title": "🏁 Round Finished / Interrupted",
+                    "description": f"**Question:** {question}\n**Answering:** {participant}",
+                    "color": 8421504,
+                    "fields": [
+                        {
+                            "name": "⏳ Time",
+                            "value": "🛑 Stopped",
+                            "inline": True
+                        },
+                        {
+                            "name": "🔥 Chain",
+                            "value": f"{chain_drawn}", 
+                            "inline": True
+                        },
+                        {
+                            "name": "💰 Bank",
+                            "value": f"{bank}", 
+                            "inline": True
+                        }
+                    ]
+                }]
+            }
 
         try:
             requests.patch(f"{self.url}/messages/{self.message_id}", json=payload)

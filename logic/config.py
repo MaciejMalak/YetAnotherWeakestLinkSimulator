@@ -13,6 +13,8 @@ class GameConfig:
         self._base_round_duration = 30
         self._extra_time = 0
         self._discord_webhook_url = ""
+        self._auto_end_on_timeout = True
+        self._discord_embed_color = 8421504
 
         self._load_properties()
 
@@ -55,7 +57,19 @@ class GameConfig:
 
                     if key == "discord_webhook_url":
                         self._discord_webhook_url = value
-        
+
+                    if key == "auto_end_on_timeout":
+                        try:
+                            self._auto_end_on_timeout = value.lower() in ("true", "1", "yes")
+                        except ValueError:
+                            raise ValueError(f"Invalid value for auto_end_on_timeout: {value}. Must be a boolean.")
+                        
+                    if key == "discord_embed_color":
+                        try:
+                            self._discord_embed_color = int(value)
+                        except ValueError:
+                            raise ValueError(f"Invalid value for discord_embed_color: {value}. Must be an integer color code.")
+
         if secret_key_path.exists():
             with open(secret_key_path, "r", encoding="utf-8") as f:
                 secret_key = f.read().strip()
@@ -73,3 +87,15 @@ class GameConfig:
         """Returns the Discord webhook URL."""
 
         return self._discord_webhook_url
+
+    @property
+    def auto_end_on_timeout(self) -> bool:
+        """Returns whether the game should automatically end on timeout."""
+
+        return self._auto_end_on_timeout
+    
+    @property
+    def discord_embed_color(self) -> int:
+        """Returns the color used for Discord embeds."""
+
+        return self._discord_embed_color

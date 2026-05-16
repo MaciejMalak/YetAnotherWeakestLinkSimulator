@@ -22,7 +22,7 @@ class HostTUI:
         self.questions_logic = QuestionsLogic(questions, answers, participants)
         self.time_available = True
         self.config = config
-        self.notifier = DiscordNotifier(config.discord_url)
+        self.notifier = DiscordNotifier(config.discord_url, config.discord_embed_color)
 
     def draw_screen(
         self, question: str, answer: str, chain_drawn: str, bank: int, time_left: int, participant: str
@@ -86,16 +86,30 @@ class HostTUI:
 
                 if timer.time_left == 0 and self.time_available:
                     self.time_available = False
+                    if self.config.auto_end_on_timeout:
+                        self.running = False
+                        print(self.term.move_y(14) + self.term.center("Game over! Time is up."))
+                        self.notifier.freeze_old_message("__TIMEOUT__", participant, chain_drawn, bank)
+                        self.notifier.send_disconnect_message()
+                        break
 
                 self.draw_screen(current_question, answer, chain_drawn, bank, timer.time_left, participant)
                 key = self.term.inkey(timeout=0.1)
-
+                    
                 if key.lower() == " ":
                     print(
                         self.term.move_y(7) + self.term.center("Correct answer!")
                     )
                     timer.record_answer(participant)
                     current_question, answer, participant, chain = self.questions_logic.question_answered(QuestionStatus.ANSWERED_CORRECTLY)
+
+                    if current_question == "__OUT_OF_QUESTIONS__":
+                        self.running = False
+                        print(self.term.move_y(14) + self.term.center("Game over! No more questions left."))
+                        self.notifier.freeze_old_message(current_question, participant, chain_drawn, bank)
+                        self.notifier.send_disconnect_message()
+                        break
+
                     chain_drawn = self.questions_logic.draw_chain(chain)
                     now = time.time()
                     end_time = now + timer.time_left
@@ -108,6 +122,14 @@ class HostTUI:
                     )
                     timer.record_answer(participant)
                     current_question, answer, participant, chain = self.questions_logic.question_answered(QuestionStatus.ANSWERED_INCORRECTLY)
+
+                    if current_question == "__OUT_OF_QUESTIONS__":
+                        self.running = False
+                        print(self.term.move_y(14) + self.term.center("Game over! No more questions left."))
+                        self.notifier.freeze_old_message(current_question, participant, chain_drawn, bank)
+                        self.notifier.send_disconnect_message()
+                        break
+
                     chain_drawn = self.questions_logic.draw_chain(chain)
                     now = time.time()
                     end_time = now + timer.time_left

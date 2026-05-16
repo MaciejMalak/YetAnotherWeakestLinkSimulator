@@ -33,11 +33,10 @@ pip install -r requirements.txt
 | Host Interface | ✅ |
 | Player Interface | ✅ |
 
-**Note:** The project now includes full blessed terminal support with English screen text, timer support introduced in the previous release, and a project-level `properties.txt` settings file in the current `v0.5.0` release. The host, user-only, and player interfaces are implemented. The `properties.txt` file currently defines `round_duration` (seconds per round), `extra_time` (additional prep time for the host), and an optional `discord_key` for webhook integration. If Discord is not configured, the app runs normally without Discord support. The next update will probably be a purely cosmetic polish release without additional features.
+**Note:** The project now includes full blessed terminal support with English screen text, timer support introduced in the previous release, and a project-level `properties.txt` settings file in the current `v0.6.0` release. The host, user-only, and player interfaces are implemented. The `properties.txt` file currently defines `round_duration` (seconds per round), `extra_time` (additional prep time for the host), `auto_end_on_timeout`, and `discord_embed_color`, plus an optional `discord_key` for webhook integration. `config.py` was updated to handle the new settings. If Discord is not configured, the app runs normally without Discord support. The next update will probably be a purely cosmetic polish release without additional features.
 
 ## Road to v1.0.0
 
-- 🎨 `v0.6.0` — Discord customization and optimization update: better webhook handling and performance tuning.
 - ⏱️ `v0.7.0` — Proper setup time update: more configurable round timing and host preparation flow.
 - 🛠️ `v0.8.0` — Misc fixes update: bug fixes, polish, and stability improvements ahead of the major release.
 - 🌟 `v1.0.0` — Official 1.0 release with a boatload of surprises and a finished polished experience.
@@ -72,24 +71,24 @@ The current version includes `questions.txt`, `participants.txt`, and `propertie
 
 - `questions.txt` contains the quiz questions and answers.
 - `participants.txt` contains the player names for each game.
-- `properties.txt` contains configurable settings for the game logic, timing, and optional Discord webhook key.
+- `properties.txt` contains configurable settings for the game logic, timing, Discord embed colors, and optional webhook key.
 
 ### How to edit
 1. Open `questions.txt` in any text editor.
 2. Add or change questions, keeping the existing format.
 3. Open `participants.txt` and update participant names as needed.
-4. Open `properties.txt` and adjust settings to your preference. Current keys include `round_duration` (seconds per round), `extra_time` (host preparation seconds), and optional `discord_key` for Discord webhook support — consult the project wiki for full details.
+4. Open `properties.txt` and adjust settings to your preference. Current keys include `round_duration` (seconds per round), `extra_time` (host preparation seconds), `auto_end_on_timeout`, `discord_embed_color`, and optional `discord_key` for Discord webhook support — consult the project wiki for full details.
 5. Save the files and run `main.py` again to use the updated game data and settings.
 
 ## Version History
 
-### v0.5.0 (Current)
-- Added chain visualization and slightly updated the host terminal GUI.
-- Continued support for optional Discord websocket integration and `discord_key` configuration.
-- Completed host, user-only, and player interface implementation.
-- Next update will probably be a purely cosmetic polish release without additional features.
+### v0.6.0 (Current)
+- Added new `properties.txt` options: `auto_end_on_timeout` and `discord_embed_color`.
+- Updated `config.py` to load and handle the new settings.
+- Added embedded Discord messages after timeout and when questions have run out.
+- Next update will probably mostly include new settings in `properties.txt`.
 
-### v0.4.0
+### v0.5.0
 - Added optional Discord websocket integration; the app runs normally when Discord is not configured.
 - Updated `properties.txt` to support an optional `discord_key` for webhook integration.
 - Added root-level `debug.py` and `discord_key.txt` files to support new configuration flows.
