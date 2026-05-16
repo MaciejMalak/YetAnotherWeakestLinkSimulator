@@ -37,7 +37,8 @@ YetAnotherWeakestLinkSimulator/
 ├── logic/
 │   ├── bank.py
 │   ├── parser.py
-│   └── question_status.py
+│   ├── question_status.py
+│   └── timer.py
 └── TUI/    
     ├── questions_logic.py
     └── terminal.py
