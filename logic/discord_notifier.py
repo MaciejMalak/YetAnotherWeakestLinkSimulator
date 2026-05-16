@@ -6,7 +6,7 @@ class DiscordNotifier:
         self.url = webhook_url
         self.message_id = None
 
-    def send_game_update(self, question: str, participant: str, end_time_unix: float, chain: int, bank: int):
+    def send_game_update(self, question: str, participant: str, end_time_unix: float, chain_drawn: str, bank: int):
         if not self.url:
             return
 
@@ -23,7 +23,7 @@ class DiscordNotifier:
                     },
                     {
                         "name": "🔥 Chain",
-                        "value": str(chain), 
+                        "value": f"{chain_drawn}", 
                         "inline": True
                     },
                     {
@@ -46,7 +46,7 @@ class DiscordNotifier:
             print(f"[YAWLS] Error with Discord update: {e}")
             pass
 
-    def freeze_old_message(self, question: str, participant: str, chain: int, bank: int):
+    def freeze_old_message(self, question: str, participant: str, chain_drawn: str, bank: int):
         if not self.url or self.message_id is None:
             return
 
@@ -63,7 +63,7 @@ class DiscordNotifier:
                     },
                     {
                         "name": "🔥 Chain",
-                        "value": str(chain), 
+                        "value": f"{chain_drawn}", 
                         "inline": True
                     },
                     {

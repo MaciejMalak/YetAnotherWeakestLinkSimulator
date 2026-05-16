@@ -33,11 +33,10 @@ pip install -r requirements.txt
 | Host Interface | ✅ |
 | Player Interface | ✅ |
 
-**Note:** The project now includes full blessed terminal support with English screen text, timer support introduced in the previous release, and a project-level `properties.txt` settings file in the current `v0.4.0` release. The host, user-only, and player interfaces are implemented. The `properties.txt` file currently defines `round_duration` (seconds per round), `extra_time` (additional prep time for the host), and an optional `discord_key` for webhook integration. If Discord is not configured, the app runs normally without Discord support. The next update will probably be a purely cosmetic polish release without additional features.
+**Note:** The project now includes full blessed terminal support with English screen text, timer support introduced in the previous release, and a project-level `properties.txt` settings file in the current `v0.5.0` release. The host, user-only, and player interfaces are implemented. The `properties.txt` file currently defines `round_duration` (seconds per round), `extra_time` (additional prep time for the host), and an optional `discord_key` for webhook integration. If Discord is not configured, the app runs normally without Discord support. The next update will probably be a purely cosmetic polish release without additional features.
 
 ## Road to v1.0.0
 
-- 🚀 `v0.5.0` — UI refresh update: various interface elements improved for a cleaner, more polished experience.
 - 🎨 `v0.6.0` — Discord customization and optimization update: better webhook handling and performance tuning.
 - ⏱️ `v0.7.0` — Proper setup time update: more configurable round timing and host preparation flow.
 - 🛠️ `v0.8.0` — Misc fixes update: bug fixes, polish, and stability improvements ahead of the major release.
@@ -84,12 +83,17 @@ The current version includes `questions.txt`, `participants.txt`, and `propertie
 
 ## Version History
 
-### v0.4.0 (Current)
+### v0.5.0 (Current)
+- Added chain visualization and slightly updated the host terminal GUI.
+- Continued support for optional Discord websocket integration and `discord_key` configuration.
+- Completed host, user-only, and player interface implementation.
+- Next update will probably be a purely cosmetic polish release without additional features.
+
+### v0.4.0
 - Added optional Discord websocket integration; the app runs normally when Discord is not configured.
 - Updated `properties.txt` to support an optional `discord_key` for webhook integration.
 - Added root-level `debug.py` and `discord_key.txt` files to support new configuration flows.
 - Completed host, user-only, and player interface implementation.
-- Next update will probably be a purely cosmetic polish release without additional features.
 
 ### v0.3.0
 - Added `properties.txt` to provide project-level settings for game logic and UI.

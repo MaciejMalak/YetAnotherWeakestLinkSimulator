@@ -20,7 +20,7 @@ class QuestionsLogic:
         if len(self.questions) > 0 and len(self.answers) > 0 and len(self.participants) > 0:
             self._current_question = self.questions[0]
             self._current_answer = self.answers[0]
-            self._current_participant = self.participants[0]
+            self._current_participant = self.participants[-1]
         else:
             raise ValueError("The lists of questions, answers, and participants cannot be empty.")
 
@@ -86,3 +86,10 @@ class QuestionsLogic:
 
         self.bank.bank_money()
         return self.bank.current_amount
+
+    def draw_chain(self, chain: int) -> str:
+        """Returns a string representation of the current chain position."""
+        chain_visual = ["[--------]", "[#-------]", "[##------]", "[###-----]", "[####----]", "[#####---]", "[######--]", "[#######-]", "[########]"]
+        if chain >= len(chain_visual):
+            return chain_visual[-1]
+        return chain_visual[chain]
