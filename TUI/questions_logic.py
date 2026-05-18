@@ -43,6 +43,11 @@ class QuestionsLogic:
     def questions_left(self) -> int:
         """Returns the number of questions left in the game."""
         return len(self.questions) - self.questions.index(self._current_question) - 1
+    
+    @property
+    def to_be_banked(self) -> int:
+        """Returns the amount of money that can be banked if the current participant answers correctly."""
+        return self.bank.value_chain[self.bank._current_chain_position]
 
     def question_answered(self, answer_status: QuestionStatus) -> tuple[str, str, str, int]:
         """Updates the current question, answer, participant, and bank chain position based on the status of the answered question.

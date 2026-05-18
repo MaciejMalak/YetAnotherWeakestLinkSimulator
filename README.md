@@ -33,13 +33,12 @@ pip install -r requirements.txt
 | Host Interface | ✅ |
 | Player Interface | ✅ |
 
-**Note:** The project now includes full blessed terminal support with English screen text, timer support introduced in the previous release, and a project-level `properties.txt` settings file in the current `v0.6.0` release. The host, user-only, and player interfaces are implemented. The `properties.txt` file currently defines `round_duration` (seconds per round), `extra_time` (additional prep time for the host), `auto_end_on_timeout`, and `discord_embed_color`, plus an optional `discord_key` for webhook integration. `config.py` was updated to handle the new settings. If Discord is not configured, the app runs normally without Discord support. The next update will probably be a purely cosmetic polish release without additional features.
+**Note:** `v0.7.0` is ready to release and brings a boatload of new features: host statistics after every round, cleaner `properties.txt` formatting, extra host prep time before rounds via `extra_time`, and a new Discord embed for the setup phase of the game. The next update will likely focus on polishing the existing features rather than adding new ones, since the game is now nearly in a go-to state.
 
 ## Road to v1.0.0
 
-- ⏱️ `v0.7.0` — Proper setup time update: more configurable round timing and host preparation flow.
-- 🛠️ `v0.8.0` — Misc fixes update: bug fixes, polish, and stability improvements ahead of the major release.
-- 🌟 `v1.0.0` — Official 1.0 release with a boatload of surprises and a finished polished experience.
+- 🛠️ `v0.8.0` — Polish release: quality improvements, bug fixes, and stability updates.
+- 🌟 `v1.0.0` — Official 1.0 release with a finished and polished experience.
 
 ## Repository Structure
 
@@ -59,6 +58,7 @@ YetAnotherWeakestLinkSimulator/
 │   ├── discord_notifier.py
 │   ├── parser.py
 │   ├── question_status.py
+│   ├── stats_tracker.py
 │   └── timer.py
 └── TUI/    
     ├── questions_logic.py
@@ -82,7 +82,15 @@ The current version includes `questions.txt`, `participants.txt`, and `propertie
 
 ## Version History
 
-### v0.6.0 (Current)
+### v0.7.0 (Current)
+- Added host statistics after every round so the host can review performance immediately.
+- Cleaned up `properties.txt` formatting and improved settings clarity.
+- Added `extra_time` in `properties.txt` for extra host preparation before the round starts.
+- Added a new Discord embed for the setup phase of the game.
+- Included `logic/stats_tracker.py` to support the new round stats and tracking flow.
+- The next update will likely focus on polishing existing features rather than adding new functionality.
+
+### v0.6.0
 - Added new `properties.txt` options: `auto_end_on_timeout` and `discord_embed_color`.
 - Updated `config.py` to load and handle the new settings.
 - Added embedded Discord messages after timeout and when questions have run out.

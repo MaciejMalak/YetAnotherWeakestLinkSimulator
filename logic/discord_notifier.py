@@ -10,31 +10,42 @@ class DiscordNotifier:
     def send_game_update(self, question: str, participant: str, end_time_unix: float, chain_drawn: str, bank: int):
         if not self.url:
             return
+        
+        if question == "__SETUP__":
+            payload = {
+                "embeds": [{
+                    "title": "⏳ Round Setup",
+                    "description": "**Please wait, the questions will be visible shortly.**\nThe Host is preparing the round.",
+                    "color": self.color
+                }]
+            }
+        
+        else:
 
-        payload = {
-            "embeds": [{
-                "title": "❓ Question Tab!",
-                "description": f"**Question:** {question}\n**Answering:** {participant}",
-                "color": self.color,
-                "fields": [
-                    {
-                        "name": "⏳ Time",
-                        "value": f"<t:{int(end_time_unix)}:R>", 
-                        "inline": True
-                    },
-                    {
-                        "name": "🔥 Chain",
-                        "value": f"{chain_drawn}", 
-                        "inline": True
-                    },
-                    {
-                        "name": "💰 Bank",
-                        "value": f"{bank}",
-                        "inline": True
-                    }
-                ]
-            }]
-        }
+            payload = {
+                "embeds": [{
+                    "title": "❓ Question Tab!",
+                    "description": f"**Question:** {question}\n**Answering:** {participant}",
+                    "color": self.color,
+                    "fields": [
+                        {
+                            "name": "⏳ Time",
+                            "value": f"<t:{int(end_time_unix)}:R>", 
+                            "inline": True
+                        },
+                        {
+                            "name": "🔥 Chain",
+                            "value": f"{chain_drawn}", 
+                            "inline": True
+                        },
+                        {
+                            "name": "💰 Bank",
+                            "value": f"{bank}",
+                            "inline": True
+                        }
+                    ]
+                }]
+            }
 
         try:
             if self.message_id is None:

@@ -1,4 +1,5 @@
 from blessed import Terminal
+from logic.stats_tracker import StatsTracker
 from logic.config import GameConfig
 from logic.timer import GameTimer
 from logic.question_status import QuestionStatus
@@ -23,6 +24,7 @@ class HostTUI:
         self.time_available = True
         self.config = config
         self.notifier = DiscordNotifier(config.discord_url, config.discord_embed_color)
+        self.stats = StatsTracker(participants)
 
     def draw_screen(
         self, question: str, answer: str, chain_drawn: str, bank: int, time_left: int, participant: str
@@ -77,8 +79,28 @@ class HostTUI:
             chain = 0
             chain_drawn = "[--------]"
 
+            if self.config.extra_time > 0:
+                self.notifier.send_game_update("__SETUP__", "", 0, "", 0)
+
+                setup_end_time = time.time() + self.config.extra_time
+                while time.time() < setup_end_time:
+                    remaining_setup = int(setup_end_time - time.time())
+                    self.draw_screen(current_question, answer, chain_drawn, bank, remaining_setup, participant)
+                    print(self.term.move_y(14) + self.term.center("⏳ Setup phase, press [S] to skip."))
+                
+                    key = self.term.inkey(timeout=0.1)
+
+                    if key.lower() == "s":
+                        break
+
+                    elif key.code == self.term.KEY_ENTER:
+                        self.running = False
+                        return
+
             now = time.time()
             end_time = now + timer.time_left
+
+            current_question, answer, participant, chain = self.questions_logic.question_answered(QuestionStatus.ANSWERED_INCORRECTLY)
             self.notifier.send_game_update(current_question, participant, end_time, chain_drawn, bank)
 
 
@@ -88,6 +110,11 @@ class HostTUI:
                     self.time_available = False
                     if self.config.auto_end_on_timeout:
                         self.running = False
+                        self.stats.record_bank(participant, self.questions_logic.to_be_banked)
+                        bank = self.questions_logic.bank_money()
+                        chain = 0
+                        chain_drawn = self.questions_logic.draw_chain(chain)
+
                         print(self.term.move_y(14) + self.term.center("Game over! Time is up."))
                         self.notifier.freeze_old_message("__TIMEOUT__", participant, chain_drawn, bank)
                         self.notifier.send_disconnect_message()
@@ -100,6 +127,7 @@ class HostTUI:
                     print(
                         self.term.move_y(7) + self.term.center("Correct answer!")
                     )
+                    self.stats.record_answer(participant, QuestionStatus.ANSWERED_CORRECTLY)
                     timer.record_answer(participant)
                     current_question, answer, participant, chain = self.questions_logic.question_answered(QuestionStatus.ANSWERED_CORRECTLY)
 
@@ -120,6 +148,7 @@ class HostTUI:
                         self.term.move_y(7)
                         + self.term.center("Incorrect answer!")
                     )
+                    self.stats.record_answer(participant, QuestionStatus.ANSWERED_INCORRECTLY)
                     timer.record_answer(participant)
                     current_question, answer, participant, chain = self.questions_logic.question_answered(QuestionStatus.ANSWERED_INCORRECTLY)
 
@@ -136,6 +165,7 @@ class HostTUI:
                     self.notifier.send_game_update(current_question, participant, end_time, chain_drawn, bank)
 
                 elif key.code == self.term.KEY_ENTER:
+                    self.stats.record_bank(participant, self.questions_logic.to_be_banked)
                     print(self.term.move_y(7) + self.term.center("Banking!"))
                     bank = self.questions_logic.bank_money()
                     chain = 0
@@ -152,3 +182,5 @@ class HostTUI:
                     self.notifier.send_disconnect_message()
 
                 time.sleep(0.3)
+
+        self.stats.display_final_board()

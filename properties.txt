@@ -2,17 +2,25 @@
 # YAWLS - Game Configuration Properties
 # ==========================================
 
+#######################
+# == GAME SETTINGS == #
+#######################
+
 # Round duration (Base time)
-round_duration = 20
+round_duration = 120
 
 # Extra time after the programme has started for host to prepare
-extra_time = 5
-
-# Your discord key, if you don't want to use one leave the next line as it is. Replace YOUR_KEY with e.g. 1234567890123456789/aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789_aBcDeFgHiJkLmNoPqRsTuVwXyZ012
-discord_webhook_url = https://discord.com/api/webhooks/YOUR_KEY
+extra_time = 3
 
 # Boolean value that decides whether the game should automatically end on timeout
 auto_end_on_timeout = True
+
+#########################
+# == DISCORD SECTION == #
+#########################
+
+# Your discord key, if you don't want to use one leave the next line as it is. Replace YOUR_KEY with e.g. 1234567890123456789/aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789_aBcDeFgHiJkLmNoPqRsTuVwXyZ012
+discord_webhook_url = https://discord.com/api/webhooks/YOUR_KEY
 
 # Default color for the active game embed on Discord (decimal format)
 discord_embed_color = 8421504

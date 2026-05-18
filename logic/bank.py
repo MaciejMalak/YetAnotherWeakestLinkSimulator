@@ -22,6 +22,8 @@ class Bank:
         """Adds the current amount to the total amount in the bank and resets the current amount and chain position."""
         self._current_amount += self.value_chain[self._current_chain_position]
         self._current_chain_position = 0
+        if self._current_amount > 3000:
+            self._current_amount = 3000
     
     @property
     def current_amount(self) -> int:

@@ -15,10 +15,11 @@ class GameConfig:
         self._discord_webhook_url = ""
         self._auto_end_on_timeout = True
         self._discord_embed_color = 8421504
+        self._discord_blank_time = 3
 
         self._load_properties()
 
-        self._round_duration = self._base_round_duration + self._extra_time
+        self._base_round_duration += self._extra_time
 
     def _load_properties(self):
         """Loads the game configuration from a properties file. If the file is not found, it uses default values."""
@@ -80,7 +81,7 @@ class GameConfig:
     def round_duration(self) -> int:
         """Returns the duration of each round in seconds."""
 
-        return self._round_duration
+        return self._base_round_duration
 
     @property
     def discord_url(self) -> str:
@@ -99,3 +100,9 @@ class GameConfig:
         """Returns the color used for Discord embeds."""
 
         return self._discord_embed_color
+
+    @property
+    def extra_time(self) -> int:
+        """Returns the extra time that can be added to a round in seconds."""
+
+        return self._extra_time
